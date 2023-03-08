@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package fileupload.v1;
+
+option go_package = "server/gen/fileupload/v1;fileuploadv1";
+
+message UploadRequest {
+  oneof data {
+    FileInfo file_info = 1;
+    bytes file = 2;
+  }
+}
+
+message FileInfo {
+  string name = 1;
+  string type = 2;
+}
+
+message UploadResponse {
+  string msg = 1;
+  uint32 size = 2;
+}
+
+service FileUploadService {
+  rpc Upload(stream UploadRequest) returns (UploadResponse) {}
+}
